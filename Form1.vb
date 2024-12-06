@@ -3,24 +3,19 @@ Imports System.Collections.Generic
 Imports System.IO
 Imports System.Text.Json
 Imports System.Threading
-Imports Microsoft.AppCenter
-Imports Microsoft.AppCenter.Analytics
-Imports Microsoft.AppCenter.Crashes
-Imports Microsoft.AppCenter.Push
 
 Public Class Form1
 
     ' Constants
     Private Const SettingsFile As String = "settings.txt"
+    Private Const POUNDS_TO_KG As Double = 0.453592
+    Private Const INCHES_TO_METERS As Double = 0.0254
 
     ' Variables
     Private languages As Dictionary(Of String, Dictionary(Of String, String))
 
     ' Load event
     Private Sub BMICalculator_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
-        AppCenter.Start("d31b68c5-b183-4505-b6e5-9F44395F8a41", GetType(Analytics), GetType(Crashes), GetType(Push))
-
         ' Load translations 
         LoadLanguagesFromJson("translations.json")
         ' Load user settings
@@ -30,7 +25,7 @@ Public Class Form1
     End Sub
 
     ' Calculate BMI
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles calculate.Click
+    Private Sub calculate_Click(sender As Object, e As EventArgs) Handles calculate.Click
         Try
             Dim weight As Double
             Dim height As Double
@@ -40,8 +35,8 @@ Public Class Form1
                 weight = Double.Parse(txtWeight.Text)
                 height = Double.Parse(txtHeight.Text)
             Else
-                weight = Double.Parse(txtWeight.Text) * 0.453592 ' Pounds to kg
-                height = Double.Parse(txtHeight.Text) * 0.0254 ' Inches to meters
+                weight = Double.Parse(txtWeight.Text) * POUNDS_TO_KG ' Pounds to kg
+                height = Double.Parse(txtHeight.Text) * INCHES_TO_METERS ' Inches to meters
             End If
 
             ' Calculate BMI
@@ -60,14 +55,19 @@ Public Class Form1
         LoadLocalizedStrings() ' Refresh UI
     End Sub
 
-    ' Reset input fields and status
-    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles reset.Click
-        calculated.Text = ""
+    ' Reset text boxes and status label
+    Private Sub reset_Click(sender As Object, e As EventArgs) Handles reset.Click
+        calculated.Text = "Enter value"
+
         txtHeight.Clear()
+
         txtWeight.Clear()
+
         Status.Text = ""
+
         Status.BackColor = Color.White
     End Sub
+
 
     ' Exit application
     Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
@@ -92,12 +92,50 @@ Public Class Form1
 
     ' Update UI and save settings when unit system changes
     Private Sub rbMetric_CheckedChanged(sender As Object, e As EventArgs) Handles rbMetric.CheckedChanged
+        If rbMetric.Checked Then ' Only convert if the radio button is checked
+            ConvertUnits(convertToMetric:=True)
+        End If
         UpdateUIAndSaveSettings()
     End Sub
 
     Private Sub rbImperial_CheckedChanged(sender As Object, e As EventArgs) Handles rbImperial.CheckedChanged
+        If rbImperial.Checked Then ' Only convert if the radio button is checked
+            ConvertUnits(convertToMetric:=False)
+        End If
         UpdateUIAndSaveSettings()
     End Sub
+
+
+
+    ' Convert units in the text boxes
+    Private Sub ConvertUnits(convertToMetric As Boolean)
+        Try
+            If txtWeight.Text <> "" And txtHeight.Text <> "" Then
+                Dim weight As Double = Double.Parse(txtWeight.Text)
+                Dim height As Double = Double.Parse(txtHeight.Text)
+
+                If convertToMetric Then
+                    weight = weight / 2.205  ' Pounds to kg 
+                    height = height / 39.37  ' Inches to meters 
+                Else
+                    weight = weight * 2.205  ' Kg to pounds 
+                    height = height * 39.37  ' Meters to inches 
+                End If
+
+                txtWeight.Text = String.Format("{0:f}", weight)
+                txtHeight.Text = String.Format("{0:f}", height)
+
+                Console.WriteLine("Converted weight: " & weight) ' Debugging output
+                Console.WriteLine("Converted height: " & height) ' Debugging output
+            End If
+        Catch ex As FormatException
+            MessageBox.Show("Please enter valid numbers for weight and height.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Catch ex As Exception
+            MessageBox.Show("An error occurred: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+
 
     ' --- Helper Methods ---
 
@@ -200,32 +238,16 @@ Public Class Form1
                     Dim unitSystem As String = reader.ReadLine()
                     Dim language As String = reader.ReadLine()
 
-                    ' Set unit system WITHOUT triggering the CheckedChanged event
-                    RemoveHandler rbMetric.CheckedChanged, AddressOf rbMetric_CheckedChanged
-                    RemoveHandler rbImperial.CheckedChanged, AddressOf rbImperial_CheckedChanged
+                    ' Set unit system and language WITHOUT triggering events
+                    SetUnitSystemAndLanguage(unitSystem, language)
 
-                    rbMetric.Checked = (unitSystem = "Metric")
-
-                    AddHandler rbMetric.CheckedChanged, AddressOf rbMetric_CheckedChanged
-                    AddHandler rbImperial.CheckedChanged, AddressOf rbImperial_CheckedChanged
-
-                    ' Set language
-                    Thread.CurrentThread.CurrentUICulture = New CultureInfo(language)
                 End Using
             Else
                 ' Use default settings
                 MessageBox.Show("Settings file not found. Using default settings.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-                ' Set defaults WITHOUT triggering the CheckedChanged event
-                RemoveHandler rbMetric.CheckedChanged, AddressOf rbMetric_CheckedChanged
-                RemoveHandler rbImperial.CheckedChanged, AddressOf rbImperial_CheckedChanged
-
-                rbMetric.Checked = True
-
-                AddHandler rbMetric.CheckedChanged, AddressOf rbMetric_CheckedChanged
-                AddHandler rbImperial.CheckedChanged, AddressOf rbImperial_CheckedChanged
-
-                Thread.CurrentThread.CurrentUICulture = New CultureInfo("en-US")
+                ' Set defaults WITHOUT triggering events
+                SetUnitSystemAndLanguage("Metric", "en-US")
             End If
         Catch ex As Exception
             MessageBox.Show("Error loading settings: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -258,4 +280,29 @@ Public Class Form1
         End Try
     End Sub
 
+    ' Method to set unit system and language without triggering events
+    Private Sub SetUnitSystemAndLanguage(unitSystem As String, languageCode As String)
+        RemoveHandler rbMetric.CheckedChanged, AddressOf rbMetric_CheckedChanged
+        RemoveHandler rbImperial.CheckedChanged, AddressOf rbImperial_CheckedChanged
+
+        rbMetric.Checked = (unitSystem = "Metric")
+        rbImperial.Checked = (unitSystem = "Imperial")
+
+        AddHandler rbMetric.CheckedChanged, AddressOf rbMetric_CheckedChanged
+        AddHandler rbImperial.CheckedChanged, AddressOf rbImperial_CheckedChanged
+
+        Thread.CurrentThread.CurrentUICulture = New CultureInfo(languageCode)
+    End Sub
+
+
+    ' Test Values
+    Private Sub MetricToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MetricToolStripMenuItem.Click
+        txtWeight.Text = "68"
+        txtHeight.Text = "1.7"
+    End Sub
+
+    Private Sub ImperialToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImperialToolStripMenuItem.Click
+        txtWeight.Text = "149.94"
+        txtHeight.Text = "66.93"
+    End Sub
 End Class

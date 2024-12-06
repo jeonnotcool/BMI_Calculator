@@ -45,6 +45,9 @@ Partial Class Form1
         Me.EnglishToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TagalogToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.EnterTestValueToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MetricToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ImperialToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.GroupBox1.SuspendLayout()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
@@ -134,7 +137,7 @@ Partial Class Form1
         Me.Status.Font = New System.Drawing.Font("Segoe UI Variable Display Semib", 15.0!, System.Drawing.FontStyle.Bold)
         Me.Status.Location = New System.Drawing.Point(372, 304)
         Me.Status.Name = "Status"
-        Me.Status.Size = New System.Drawing.Size(342, 44)
+        Me.Status.Size = New System.Drawing.Size(342, 84)
         Me.Status.TabIndex = 41
         '
         'calcLabel
@@ -175,13 +178,13 @@ Partial Class Form1
         '
         'calculated
         '
-        Me.calculated.BackColor = System.Drawing.Color.White
-        Me.calculated.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.calculated.Font = New System.Drawing.Font("Segoe UI Variable Display Semib", 15.0!, System.Drawing.FontStyle.Bold)
-        Me.calculated.Location = New System.Drawing.Point(372, 190)
+        Me.calculated.BackColor = System.Drawing.SystemColors.Control
+        Me.calculated.Font = New System.Drawing.Font("Segoe UI Variable Display Semib", 25.0!, System.Drawing.FontStyle.Bold)
+        Me.calculated.Location = New System.Drawing.Point(364, 161)
         Me.calculated.Name = "calculated"
-        Me.calculated.Size = New System.Drawing.Size(244, 30)
+        Me.calculated.Size = New System.Drawing.Size(244, 48)
         Me.calculated.TabIndex = 36
+        Me.calculated.Text = "Enter value"
         '
         'txtHeight
         '
@@ -189,7 +192,7 @@ Partial Class Form1
         Me.txtHeight.Location = New System.Drawing.Point(25, 272)
         Me.txtHeight.Multiline = True
         Me.txtHeight.Name = "txtHeight"
-        Me.txtHeight.Size = New System.Drawing.Size(84, 29)
+        Me.txtHeight.Size = New System.Drawing.Size(84, 32)
         Me.txtHeight.TabIndex = 35
         '
         'txtWeight
@@ -198,7 +201,7 @@ Partial Class Form1
         Me.txtWeight.Location = New System.Drawing.Point(25, 161)
         Me.txtWeight.Multiline = True
         Me.txtWeight.Name = "txtWeight"
-        Me.txtWeight.Size = New System.Drawing.Size(84, 29)
+        Me.txtWeight.Size = New System.Drawing.Size(84, 32)
         Me.txtWeight.TabIndex = 34
         '
         'MenuStrip1
@@ -212,7 +215,7 @@ Partial Class Form1
         '
         'FileToolStripMenuItem
         '
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AboutToolStripMenuItem, Me.LanguageToolStripMenuItem, Me.ExitToolStripMenuItem})
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AboutToolStripMenuItem, Me.LanguageToolStripMenuItem, Me.ExitToolStripMenuItem, Me.EnterTestValueToolStripMenuItem})
         Me.FileToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI Variable Text", 9.0!)
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
@@ -249,8 +252,32 @@ Partial Class Form1
         Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ExitToolStripMenuItem.Text = "Exit"
         '
+        'EnterTestValueToolStripMenuItem
+        '
+        Me.EnterTestValueToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MetricToolStripMenuItem, Me.ImperialToolStripMenuItem})
+        Me.EnterTestValueToolStripMenuItem.Name = "EnterTestValueToolStripMenuItem"
+        Me.EnterTestValueToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.EnterTestValueToolStripMenuItem.Text = "Enter Test Value"
+        '
+        'MetricToolStripMenuItem
+        '
+        Me.MetricToolStripMenuItem.Name = "MetricToolStripMenuItem"
+        Me.MetricToolStripMenuItem.ShortcutKeys = CType(((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Shift) _
+            Or System.Windows.Forms.Keys.M), System.Windows.Forms.Keys)
+        Me.MetricToolStripMenuItem.Size = New System.Drawing.Size(184, 22)
+        Me.MetricToolStripMenuItem.Text = "Metric"
+        '
+        'ImperialToolStripMenuItem
+        '
+        Me.ImperialToolStripMenuItem.Name = "ImperialToolStripMenuItem"
+        Me.ImperialToolStripMenuItem.ShortcutKeys = CType(((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Shift) _
+            Or System.Windows.Forms.Keys.I), System.Windows.Forms.Keys)
+        Me.ImperialToolStripMenuItem.Size = New System.Drawing.Size(184, 22)
+        Me.ImperialToolStripMenuItem.Text = "Imperial"
+        '
         'Form1
         '
+        Me.AcceptButton = Me.calculate
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(789, 537)
@@ -306,4 +333,7 @@ Partial Class Form1
     Friend WithEvents EnglishToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents TagalogToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ExitToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents EnterTestValueToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents MetricToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ImperialToolStripMenuItem As ToolStripMenuItem
 End Class
