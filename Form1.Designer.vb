@@ -53,9 +53,9 @@ Partial Class Form1
         '
         Me.GroupBox1.Controls.Add(Me.rbImperial)
         Me.GroupBox1.Controls.Add(Me.rbMetric)
-        Me.GroupBox1.Location = New System.Drawing.Point(36, 301)
+        Me.GroupBox1.Location = New System.Drawing.Point(17, 322)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(216, 57)
+        Me.GroupBox1.Size = New System.Drawing.Size(216, 66)
         Me.GroupBox1.TabIndex = 47
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Unit"
@@ -63,9 +63,9 @@ Partial Class Form1
         'rbImperial
         '
         Me.rbImperial.AutoSize = True
-        Me.rbImperial.Location = New System.Drawing.Point(93, 23)
+        Me.rbImperial.Location = New System.Drawing.Point(93, 27)
         Me.rbImperial.Name = "rbImperial"
-        Me.rbImperial.Size = New System.Drawing.Size(89, 17)
+        Me.rbImperial.Size = New System.Drawing.Size(95, 19)
         Me.rbImperial.TabIndex = 1
         Me.rbImperial.Text = "imperial lbs/in"
         Me.rbImperial.UseVisualStyleBackColor = True
@@ -73,9 +73,9 @@ Partial Class Form1
         'rbMetric
         '
         Me.rbMetric.AutoSize = True
-        Me.rbMetric.Location = New System.Drawing.Point(6, 23)
+        Me.rbMetric.Location = New System.Drawing.Point(6, 27)
         Me.rbMetric.Name = "rbMetric"
-        Me.rbMetric.Size = New System.Drawing.Size(81, 17)
+        Me.rbMetric.Size = New System.Drawing.Size(83, 19)
         Me.rbMetric.TabIndex = 0
         Me.rbMetric.Text = "metric kg/m"
         Me.rbMetric.UseVisualStyleBackColor = True
@@ -83,9 +83,9 @@ Partial Class Form1
         'reset
         '
         Me.reset.Font = New System.Drawing.Font("Segoe UI Variable Display Semib", 15.0!, System.Drawing.FontStyle.Bold)
-        Me.reset.Location = New System.Drawing.Point(396, 467)
+        Me.reset.Location = New System.Drawing.Point(396, 415)
         Me.reset.Name = "reset"
-        Me.reset.Size = New System.Drawing.Size(190, 49)
+        Me.reset.Size = New System.Drawing.Size(190, 57)
         Me.reset.TabIndex = 46
         Me.reset.Text = "Reset"
         Me.reset.UseVisualStyleBackColor = True
@@ -93,9 +93,9 @@ Partial Class Form1
         'calculate
         '
         Me.calculate.Font = New System.Drawing.Font("Segoe UI Variable Display Semib", 15.0!, System.Drawing.FontStyle.Bold)
-        Me.calculate.Location = New System.Drawing.Point(124, 467)
+        Me.calculate.Location = New System.Drawing.Point(124, 415)
         Me.calculate.Name = "calculate"
-        Me.calculate.Size = New System.Drawing.Size(190, 49)
+        Me.calculate.Size = New System.Drawing.Size(190, 57)
         Me.calculate.TabIndex = 45
         Me.calculate.Text = "Calculate"
         Me.calculate.UseVisualStyleBackColor = True
@@ -103,27 +103,27 @@ Partial Class Form1
         'hShort
         '
         Me.hShort.Font = New System.Drawing.Font("Segoe UI Variable Display Semib", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.hShort.Location = New System.Drawing.Point(235, 240)
+        Me.hShort.Location = New System.Drawing.Point(119, 270)
         Me.hShort.Name = "hShort"
-        Me.hShort.Size = New System.Drawing.Size(78, 45)
+        Me.hShort.Size = New System.Drawing.Size(68, 31)
         Me.hShort.TabIndex = 44
         Me.hShort.Text = "m"
         '
         'wShort
         '
         Me.wShort.Font = New System.Drawing.Font("Segoe UI Variable Display Semib", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.wShort.Location = New System.Drawing.Point(235, 142)
+        Me.wShort.Location = New System.Drawing.Point(115, 164)
         Me.wShort.Name = "wShort"
-        Me.wShort.Size = New System.Drawing.Size(78, 45)
+        Me.wShort.Size = New System.Drawing.Size(42, 29)
         Me.wShort.TabIndex = 43
         Me.wShort.Text = "kg"
         '
         'StatusLabel
         '
         Me.StatusLabel.Font = New System.Drawing.Font("Segoe UI Variable Display Semib", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.StatusLabel.Location = New System.Drawing.Point(386, 229)
+        Me.StatusLabel.Location = New System.Drawing.Point(367, 244)
         Me.StatusLabel.Name = "StatusLabel"
-        Me.StatusLabel.Size = New System.Drawing.Size(171, 38)
+        Me.StatusLabel.Size = New System.Drawing.Size(171, 44)
         Me.StatusLabel.TabIndex = 42
         Me.StatusLabel.Text = "Status"
         '
@@ -132,44 +132,44 @@ Partial Class Form1
         Me.Status.BackColor = System.Drawing.Color.White
         Me.Status.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.Status.Font = New System.Drawing.Font("Segoe UI Variable Display Semib", 15.0!, System.Drawing.FontStyle.Bold)
-        Me.Status.Location = New System.Drawing.Point(391, 281)
+        Me.Status.Location = New System.Drawing.Point(372, 304)
         Me.Status.Name = "Status"
-        Me.Status.Size = New System.Drawing.Size(342, 38)
+        Me.Status.Size = New System.Drawing.Size(342, 44)
         Me.Status.TabIndex = 41
         '
         'calcLabel
         '
         Me.calcLabel.Font = New System.Drawing.Font("Segoe UI Variable Display Semib", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.calcLabel.Location = New System.Drawing.Point(386, 120)
+        Me.calcLabel.Location = New System.Drawing.Point(367, 119)
         Me.calcLabel.Name = "calcLabel"
-        Me.calcLabel.Size = New System.Drawing.Size(200, 38)
+        Me.calcLabel.Size = New System.Drawing.Size(200, 44)
         Me.calcLabel.TabIndex = 40
         Me.calcLabel.Text = "Calculated BMI"
         '
         'heightLabel
         '
         Me.heightLabel.Font = New System.Drawing.Font("Segoe UI Variable Display Semib", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.heightLabel.Location = New System.Drawing.Point(31, 201)
+        Me.heightLabel.Location = New System.Drawing.Point(15, 240)
         Me.heightLabel.Name = "heightLabel"
-        Me.heightLabel.Size = New System.Drawing.Size(246, 36)
+        Me.heightLabel.Size = New System.Drawing.Size(172, 30)
         Me.heightLabel.TabIndex = 39
-        Me.heightLabel.Text = "Height in meters"
+        Me.heightLabel.Text = "Height"
         '
         'weighLabel
         '
         Me.weighLabel.Font = New System.Drawing.Font("Segoe UI Variable Display Semib", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.weighLabel.Location = New System.Drawing.Point(31, 105)
+        Me.weighLabel.Location = New System.Drawing.Point(15, 119)
         Me.weighLabel.Name = "weighLabel"
-        Me.weighLabel.Size = New System.Drawing.Size(218, 34)
+        Me.weighLabel.Size = New System.Drawing.Size(218, 39)
         Me.weighLabel.TabIndex = 38
-        Me.weighLabel.Text = "Weight in kg"
+        Me.weighLabel.Text = "Weight"
         '
         'main_title
         '
         Me.main_title.Font = New System.Drawing.Font("Segoe UI Variable Display Semib", 25.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.main_title.Location = New System.Drawing.Point(12, 37)
+        Me.main_title.Location = New System.Drawing.Point(12, 43)
         Me.main_title.Name = "main_title"
-        Me.main_title.Size = New System.Drawing.Size(383, 57)
+        Me.main_title.Size = New System.Drawing.Size(354, 66)
         Me.main_title.TabIndex = 37
         Me.main_title.Text = "BMI Calculator"
         '
@@ -178,27 +178,27 @@ Partial Class Form1
         Me.calculated.BackColor = System.Drawing.Color.White
         Me.calculated.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.calculated.Font = New System.Drawing.Font("Segoe UI Variable Display Semib", 15.0!, System.Drawing.FontStyle.Bold)
-        Me.calculated.Location = New System.Drawing.Point(391, 158)
+        Me.calculated.Location = New System.Drawing.Point(372, 190)
         Me.calculated.Name = "calculated"
-        Me.calculated.Size = New System.Drawing.Size(244, 38)
+        Me.calculated.Size = New System.Drawing.Size(244, 30)
         Me.calculated.TabIndex = 36
         '
         'txtHeight
         '
         Me.txtHeight.Font = New System.Drawing.Font("Segoe UI Variable Display Semib", 15.0!, System.Drawing.FontStyle.Bold)
-        Me.txtHeight.Location = New System.Drawing.Point(33, 240)
+        Me.txtHeight.Location = New System.Drawing.Point(25, 272)
         Me.txtHeight.Multiline = True
         Me.txtHeight.Name = "txtHeight"
-        Me.txtHeight.Size = New System.Drawing.Size(193, 38)
+        Me.txtHeight.Size = New System.Drawing.Size(84, 29)
         Me.txtHeight.TabIndex = 35
         '
         'txtWeight
         '
         Me.txtWeight.Font = New System.Drawing.Font("Segoe UI Variable Display Semib", 15.0!, System.Drawing.FontStyle.Bold)
-        Me.txtWeight.Location = New System.Drawing.Point(36, 142)
+        Me.txtWeight.Location = New System.Drawing.Point(25, 161)
         Me.txtWeight.Multiline = True
         Me.txtWeight.Name = "txtWeight"
-        Me.txtWeight.Size = New System.Drawing.Size(193, 38)
+        Me.txtWeight.Size = New System.Drawing.Size(84, 29)
         Me.txtWeight.TabIndex = 34
         '
         'MenuStrip1
@@ -206,13 +206,14 @@ Partial Class Form1
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(1088, 24)
+        Me.MenuStrip1.Size = New System.Drawing.Size(789, 24)
         Me.MenuStrip1.TabIndex = 48
         Me.MenuStrip1.Text = "MenuStrip1"
         '
         'FileToolStripMenuItem
         '
         Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AboutToolStripMenuItem, Me.LanguageToolStripMenuItem, Me.ExitToolStripMenuItem})
+        Me.FileToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI Variable Text", 9.0!)
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
         Me.FileToolStripMenuItem.Text = "File"
@@ -233,13 +234,13 @@ Partial Class Form1
         'EnglishToolStripMenuItem
         '
         Me.EnglishToolStripMenuItem.Name = "EnglishToolStripMenuItem"
-        Me.EnglishToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.EnglishToolStripMenuItem.Size = New System.Drawing.Size(115, 22)
         Me.EnglishToolStripMenuItem.Text = "English"
         '
         'TagalogToolStripMenuItem
         '
         Me.TagalogToolStripMenuItem.Name = "TagalogToolStripMenuItem"
-        Me.TagalogToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.TagalogToolStripMenuItem.Size = New System.Drawing.Size(115, 22)
         Me.TagalogToolStripMenuItem.Text = "Tagalog"
         '
         'ExitToolStripMenuItem
@@ -250,9 +251,9 @@ Partial Class Form1
         '
         'Form1
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1088, 569)
+        Me.ClientSize = New System.Drawing.Size(789, 537)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.reset)
         Me.Controls.Add(Me.calculate)
@@ -268,8 +269,10 @@ Partial Class Form1
         Me.Controls.Add(Me.txtHeight)
         Me.Controls.Add(Me.txtWeight)
         Me.Controls.Add(Me.MenuStrip1)
+        Me.Font = New System.Drawing.Font("Segoe UI Variable Text", 8.25!)
         Me.MainMenuStrip = Me.MenuStrip1
         Me.Name = "Form1"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Form1"
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()

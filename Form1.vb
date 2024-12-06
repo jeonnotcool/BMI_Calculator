@@ -19,8 +19,7 @@ Public Class Form1
     ' Load event
     Private Sub BMICalculator_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        AppCenter.Start("d31b68c5-b183-4505-b6e5-9F44395F8a41",
-                GetType(Analytics), GetType(Crashes), GetType(Push))
+        AppCenter.Start("d31b68c5-b183-4505-b6e5-9F44395F8a41", GetType(Analytics), GetType(Crashes), GetType(Push))
 
         ' Load translations 
         LoadLanguagesFromJson("translations.json")
@@ -111,6 +110,8 @@ Public Class Form1
             main_title.Text = translations("main.title")
             calculate.Text = translations("main.calculate")
             reset.Text = translations("main.reset")
+            weighLabel.Text = translations("main.weighLabel")
+            heightLabel.Text = translations("main.heightLabel")
 
             If currentLanguage = "en-US" Then
                 EnglishToolStripMenuItem.Checked = True
@@ -122,11 +123,11 @@ Public Class Form1
 
             ' Update labels based on unit system
             If rbMetric.Checked Then
-                weighLabel.Text = translations("main.weighLabel_kg")
-                heightLabel.Text = translations("main.heightLabel_m")
+                wShort.Text = translations("main.weighLabel_kg")
+                hShort.Text = translations("main.heightLabel_m")
             Else
-                weighLabel.Text = translations("main.weighLabel_lbs")
-                heightLabel.Text = translations("main.heightLabel_in")
+                wShort.Text = translations("main.weighLabel_lbs")
+                hShort.Text = translations("main.heightLabel_in")
             End If
 
 

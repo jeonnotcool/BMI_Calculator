@@ -1,32 +1,32 @@
 {
   "en-US": {
     "main.title": "BMI Calculator",
-    "main.weighLabel": "Weight in kg",
-    "main.heightLabel": "Height in meters",
+    "main.weighLabel": "Weight",
+    "main.heightLabel": "Height",
     "main.calculate": "Calculate",
     "main.reset": "Reset",
     "underweight": "You are underweight.",
     "normal_range": "You are within the normal range.",
     "overweight": "You are overweight.",
     "obese": "You are obese.",
-    "main.weighLabel_kg": "Weight in kg",
-    "main.weighLabel_lbs": "Weight in lbs",
-    "main.heightLabel_m": "Height in meters",
-    "main.heightLabel_in": "Height in inches"
+    "main.weighLabel_kg": "kg",
+    "main.weighLabel_lbs": "lbs",
+    "main.heightLabel_m": "m",
+    "main.heightLabel_in": "in"
   },
   "fil-PH": {
     "main.title": "Kalkulator ng BMI",
-    "main.weighLabel": "Timbang sa kg",
-    "main.heightLabel": "Taas sa metro",
+    "main.weighLabel": "Timbang",
+    "main.heightLabel": "Taas",
     "main.calculate": "Kalkulahin",
     "main.reset": "I-reset",
     "underweight": "Kulang ka sa timbang.",
     "normal_range": "Nasa normal na saklaw ang iyong timbang.",
     "overweight": "Sobra sa timbang.",
     "obese": "Mataba ka.",
-    "main.weighLabel_kg": "Timbang sa kg",
-    "main.weighLabel_lbs": "Timbang sa lbs",
-    "main.heightLabel_m": "Taas sa metro",
-    "main.heightLabel_in": "Taas sa pulgada"
+    "main.weighLabel_kg": "kg",
+    "main.weighLabel_lbs": "lbs",
+    "main.heightLabel_m": "m",
+    "main.heightLabel_in": "in"
   }
 }
