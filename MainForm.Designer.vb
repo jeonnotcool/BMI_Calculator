@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class Form1
+Partial Class MainForm
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -124,7 +124,7 @@ Partial Class Form1
         'StatusLabel
         '
         Me.StatusLabel.Font = New System.Drawing.Font("Segoe UI Variable Display Semib", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.StatusLabel.Location = New System.Drawing.Point(367, 244)
+        Me.StatusLabel.Location = New System.Drawing.Point(367, 257)
         Me.StatusLabel.Name = "StatusLabel"
         Me.StatusLabel.Size = New System.Drawing.Size(171, 44)
         Me.StatusLabel.TabIndex = 42
@@ -143,7 +143,7 @@ Partial Class Form1
         'calcLabel
         '
         Me.calcLabel.Font = New System.Drawing.Font("Segoe UI Variable Display Semib", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.calcLabel.Location = New System.Drawing.Point(367, 119)
+        Me.calcLabel.Location = New System.Drawing.Point(367, 63)
         Me.calcLabel.Name = "calcLabel"
         Me.calcLabel.Size = New System.Drawing.Size(200, 44)
         Me.calcLabel.TabIndex = 40
@@ -180,11 +180,11 @@ Partial Class Form1
         '
         Me.calculated.BackColor = System.Drawing.SystemColors.Control
         Me.calculated.Font = New System.Drawing.Font("Segoe UI Variable Display Semib", 25.0!, System.Drawing.FontStyle.Bold)
-        Me.calculated.Location = New System.Drawing.Point(364, 161)
+        Me.calculated.Location = New System.Drawing.Point(364, 105)
         Me.calculated.Name = "calculated"
-        Me.calculated.Size = New System.Drawing.Size(244, 48)
+        Me.calculated.Size = New System.Drawing.Size(305, 48)
         Me.calculated.TabIndex = 36
-        Me.calculated.Text = "Enter value"
+        Me.calculated.Text = "wait for update"
         '
         'txtHeight
         '
@@ -224,14 +224,14 @@ Partial Class Form1
         'AboutToolStripMenuItem
         '
         Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
-        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
         Me.AboutToolStripMenuItem.Text = "About"
         '
         'LanguageToolStripMenuItem
         '
         Me.LanguageToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EnglishToolStripMenuItem, Me.TagalogToolStripMenuItem})
         Me.LanguageToolStripMenuItem.Name = "LanguageToolStripMenuItem"
-        Me.LanguageToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.LanguageToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
         Me.LanguageToolStripMenuItem.Text = "Language"
         '
         'EnglishToolStripMenuItem
@@ -249,14 +249,14 @@ Partial Class Form1
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
         Me.ExitToolStripMenuItem.Text = "Exit"
         '
         'EnterTestValueToolStripMenuItem
         '
         Me.EnterTestValueToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MetricToolStripMenuItem, Me.ImperialToolStripMenuItem})
         Me.EnterTestValueToolStripMenuItem.Name = "EnterTestValueToolStripMenuItem"
-        Me.EnterTestValueToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.EnterTestValueToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
         Me.EnterTestValueToolStripMenuItem.Text = "Enter Test Value"
         '
         'MetricToolStripMenuItem

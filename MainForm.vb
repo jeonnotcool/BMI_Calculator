@@ -1,10 +1,28 @@
-﻿Imports System.Globalization
+﻿'// BMIMe \ MainForm.vb
+
+'// 2024/08/20 revised 2024/11/22 GMGuillergan LLC.
+
+'// This project is developed by Group #2 in collaboration with the GRASP Health Advocacy Program.
+'// Major PT Collab of Science x MAPEH x TLE x [Computer]: Health Advocacy Informercial
+
+'// Licensed to GMGuillergan LLC.
+'// https://github.com/jeonnotcool/BMI_Calculator
+
+
+Imports System.Globalization
 Imports System.Collections.Generic
 Imports System.IO
 Imports System.Text.Json
 Imports System.Threading
 
-Public Class Form1
+
+Public Class MainForm
+    ' Version -- Change the version in My Project -> Settings -> VersionNumber
+    Private ReadOnly Property CurrentVersion As String
+        Get
+            Return My.Settings.VersionNumber
+        End Get
+    End Property
 
     ' Constants
     Private Const SettingsFile As String = "settings.txt"
@@ -76,7 +94,7 @@ Public Class Form1
 
     ' About dialog (implementation not provided)
     Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
-        'AboutApp.Show()
+        Updater.ShowDialog()
     End Sub
 
     ' Set language to English
@@ -193,6 +211,8 @@ Public Class Form1
         Return language
     End Function
 
+
+
     ' Update status label and color
     Private Sub UpdateStatus(bmi As Double)
         Dim currentLanguage = GetLanguageFromSettings()
@@ -223,9 +243,8 @@ Public Class Form1
     ' Set language and update UI
     Private Sub SetLanguage(languageCode As String)
         Thread.CurrentThread.CurrentUICulture = New CultureInfo(languageCode)
-        UpdateUIAndSaveSettings()
+        SaveSettings()
         LoadLocalizedStrings()
-
     End Sub
 
 
@@ -248,6 +267,7 @@ Public Class Form1
 
                 ' Set defaults WITHOUT triggering events
                 SetUnitSystemAndLanguage("Metric", "en-US")
+                UpdateUIAndSaveSettings()
             End If
         Catch ex As Exception
             MessageBox.Show("Error loading settings: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -272,9 +292,7 @@ Public Class Form1
             Dim jsonString = File.ReadAllText(filename)
             languages = JsonSerializer.Deserialize(Of Dictionary(Of String, Dictionary(Of String, String)))(jsonString)
         Catch ex As FileNotFoundException
-
             Throw New Exception("Error loading translations: ERR_MISS_TRANSFILE - " & ex.Message)
-
         Catch ex As Exception
             MessageBox.Show("Error loading translations: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
@@ -305,4 +323,6 @@ Public Class Form1
         txtWeight.Text = "149.94"
         txtHeight.Text = "66.93"
     End Sub
+
+
 End Class

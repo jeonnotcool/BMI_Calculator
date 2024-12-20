@@ -1,4 +1,5 @@
-﻿Imports System
+﻿Imports System.Resources
+Imports System
 Imports System.Reflection
 Imports System.Runtime.InteropServices
 
@@ -8,11 +9,11 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("WindowsApp4")>
+<Assembly: AssemblyTitle("BMIMe")>
 <Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("WindowsApp4")>
-<Assembly: AssemblyCopyright("Copyright ©  2024")>
+<Assembly: AssemblyCompany("GMGuillergan")>
+<Assembly: AssemblyProduct("BMIMe")>
+<Assembly: AssemblyCopyright("Copyright © GMGuillergan 2024")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>
@@ -28,5 +29,6 @@ Imports System.Runtime.InteropServices
 '      Revision
 '
 
-<Assembly: AssemblyVersion("1.0.0.0")>
-<Assembly: AssemblyFileVersion("1.0.0.0")>
+<Assembly: AssemblyVersion("0.3.0.0")>
+<Assembly: AssemblyFileVersion("0.0.0.0")>
+<Assembly: NeutralResourcesLanguage("en-US")>
