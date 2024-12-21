@@ -1,5 +1,4 @@
-﻿
-'// GMUpdateApp
+﻿'// GMUpdateApp
 '// 2023/02/15 revised 2024/12/03 GMGuillergan LLC.
 
 '// This application is revised as part of the BMIMe project.
@@ -12,6 +11,8 @@ Imports System.IO.Compression
 Imports System.Reflection
 Imports System.Drawing.Drawing2D
 Imports System.Diagnostics
+Imports System.Text.Json
+Imports System.Threading
 
 Public Class Updater
 
@@ -23,11 +24,17 @@ Public Class Updater
     End Property
     Private updateDownloaded As Boolean = False
     Private Const GitHubRepo As String = "jeonnotcool/BMI_Calculator"
+    Private languages As Dictionary(Of String, Dictionary(Of String, String))
+
+    Private Const SettingsFile As String = "settings.txt"
+
     Private Async Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         btnUpdate.Enabled = False
         ProgressBar1.Value = 0
         VersionLabel.Text = $"Version {CurrentVersion} (Alpha)" ' used this instead because concatenation is complicated
         MakePanelRounded(Panel1)
+        LoadLanguagesFromJson("translations.json")
+        LoadLocalizedStrings()
         Await CheckForUpdates()
     End Sub
 
@@ -48,7 +55,7 @@ Public Class Updater
 
     Private Async Function CheckForUpdates() As Task
         Try
-            lblStatus.Text = "Checking for updates..."
+            lblStatus.Text = GetTranslation("updater.lblStatus.checking")
             Await Task.Delay(1000) ' Wait to initialize
 
             Using client As New HttpClient()
@@ -61,18 +68,18 @@ Public Class Updater
                 Dim latestVersion As String = latestRelease("tag_name").ToString()
 
                 If IsNewerVersion(latestVersion, CurrentVersion) Then
-                    lblStatus.Text = "Update available"
+                    lblStatus.Text = GetTranslation("updater.lblStatus.available")
                     txtReleaseNotes.Text = latestRelease("body").ToString()
-                    btnUpdate.Text = "Download Update"
+                    btnUpdate.Text = GetTranslation("updater.btnUpdate")
                     btnUpdate.Enabled = True
                 Else
-                    lblStatus.Text = "No update available."
-                    txtReleaseNotes.Text = "You are using the latest version."
+                    lblStatus.Text = GetTranslation("updater.lblStatus.none")
+                    txtReleaseNotes.Text = GetTranslation("updater.txtReleaseNotes.latest")
                 End If
             End Using
         Catch ex As Exception
-            lblStatus.Text = "Error checking for updates."
-            MessageBox.Show($"Error checking for updates: {ex.Message}", "BMIMe", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            lblStatus.Text = GetTranslation("updater.lblStatus.error")
+            MessageBox.Show(String.Format(GetTranslation("updater.error.checking"), ex.Message), "BMIMe", MessageBoxButtons.OK, MessageBoxIcon.Warning)
         End Try
     End Function
 
@@ -83,15 +90,15 @@ Public Class Updater
     End Function
 
     Private Async Sub btnUpdate_Click(sender As Object, e As EventArgs) Handles btnUpdate.Click
-        If btnUpdate.Text = "Download Update" Then
+        If btnUpdate.Text = GetTranslation("updater.btnUpdate") Then
             btnUpdate.Enabled = False
-            lblStatus.Text = "Downloading update..."
+            lblStatus.Text = GetTranslation("updater.lblStatus.downloading")
             ProgressBar1.Value = 0
             Await DownloadAndUpdate()
-            btnUpdate.Text = "Install and Restart"
+            btnUpdate.Text = GetTranslation("updater.btnUpdate.install")
             updateDownloaded = True
             btnUpdate.Enabled = True
-        ElseIf updateDownloaded AndAlso btnUpdate.Text = "Install and Restart" Then
+        ElseIf updateDownloaded AndAlso btnUpdate.Text = GetTranslation("updater.btnUpdate.install") Then
             InstallAndRestart()
         End If
     End Sub
@@ -110,7 +117,7 @@ Public Class Updater
                 End Using
             End Using
 
-            lblStatus.Text = "Extracting update..."
+            lblStatus.Text = GetTranslation("updater.lblStatus.extracting")
             ProgressBar1.Value = 50
             Dim extractPath As String = Path.Combine(Path.GetTempPath(), "update")
             If Directory.Exists(extractPath) Then
@@ -118,12 +125,12 @@ Public Class Updater
             End If
             ZipFile.ExtractToDirectory(tempFilePath, extractPath)
 
-            lblStatus.Text = "Update downloaded."
+            lblStatus.Text = GetTranslation("updater.lblStatus.downloaded")
             ProgressBar1.Value = 100
             updateDownloaded = True
         Catch ex As Exception
-            lblStatus.Text = "Error downloading update."
-            MessageBox.Show($"Error downloading update: {ex.Message}", "BMIMe", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            lblStatus.Text = GetTranslation("updater.lblStatus.error")
+            MessageBox.Show(String.Format(GetTranslation("updater.error.downloading"), ex.Message), "BMIMe", MessageBoxButtons.OK, MessageBoxIcon.Warning)
         End Try
     End Function
 
@@ -133,8 +140,8 @@ Public Class Updater
             Dim exePath As String = Path.Combine(currentPath, "BMIMe.exe")
 
             If Not File.Exists(exePath) Then
-                lblStatus.Text = "Update Failed."
-                MessageBox.Show("BMIMe is not installed. (how did you get this?)", "BMIMe", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                lblStatus.Text = GetTranslation("updater.lblStatus.updateFailed")
+                MessageBox.Show(GetTranslation("updater.error.notInstalled"), "BMIMe", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                 Return
             End If
 
@@ -143,11 +150,11 @@ Public Class Updater
                 process.Kill()
                 process.WaitForExit()
             Next
-            lblStatus.Text = "Installing update..."
+            lblStatus.Text = GetTranslation("updater.lblStatus.installing")
             Dim extractPath As String = Path.Combine(Path.GetTempPath(), "update")
 
             For Each filez In Directory.GetFiles(extractPath)
-                lblStatus.Text = "Copying Files..."
+                lblStatus.Text = GetTranslation("updater.lblStatus.copying")
                 Dim fileName As String = Path.GetFileName(filez)
                 Dim destinationFile As String = Path.Combine(currentPath, fileName)
                 If Not fileName.Equals("gmupdateapp.exe", StringComparison.OrdinalIgnoreCase) AndAlso
@@ -155,16 +162,16 @@ Public Class Updater
                    Not fileName.Equals("Newtonsoft.Json.xml", StringComparison.OrdinalIgnoreCase) Then
                     File.Copy(filez, destinationFile, True)
                 End If
-                lblStatus.Text = "Finalizing update..."
+                lblStatus.Text = GetTranslation("updater.lblStatus.finalizing")
             Next
 
-            lblStatus.Text = "Update installed. Restarting application..."
+            lblStatus.Text = GetTranslation("updater.lblStatus.installed")
             Process.Start(Application.ExecutablePath)
             Application.Exit()
 
         Catch ex As Exception
-            lblStatus.Text = "Error installing update."
-            MessageBox.Show($"Error installing update: {ex.Message}", "BMIMe", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            lblStatus.Text = GetTranslation("updater.lblStatus.error")
+            MessageBox.Show(String.Format(GetTranslation("updater.error.installing"), ex.Message), "BMIMe", MessageBoxButtons.OK, MessageBoxIcon.Warning)
         End Try
     End Sub
 
@@ -178,6 +185,70 @@ Public Class Updater
             Dim downloadUrl As String = latestRelease("assets")(0)("browser_download_url").ToString()
             Return downloadUrl
         End Using
+    End Function
+
+    ' Load localized strings
+    Private Sub LoadLocalizedStrings()
+        Dim currentLanguage = GetLanguageFromSettings()
+        If languages.ContainsKey(currentLanguage) Then
+            Dim translations = languages(currentLanguage)
+
+            If translations.ContainsKey("updater.btnUpdate") Then
+                btnUpdate.Text = If(updateDownloaded, translations("updater.btnUpdate.install"), translations("updater.btnUpdate"))
+            End If
+
+            If translations.ContainsKey("updater.lblStatus.checking") Then
+                lblStatus.Text = translations("updater.lblStatus.checking")
+            End If
+
+            If translations.ContainsKey("updater.versionLabel") Then
+                VersionLabel.Text = String.Format(translations("updater.versionLabel"), CurrentVersion)
+            End If
+
+            ' Update other controls as needed
+        Else
+            MessageBox.Show($"Language '{currentLanguage}' not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End If
+    End Sub
+
+
+    ' Get language from settings file
+    Private Function GetLanguageFromSettings() As String
+        Dim language As String = "en-US" ' Default
+
+        Try
+            If File.Exists(SettingsFile) Then
+                Using reader As New StreamReader(SettingsFile)
+                    reader.ReadLine() ' Skip unit system line
+                    language = reader.ReadLine() ' Read language line
+                End Using
+            End If
+        Catch ex As Exception
+            MessageBox.Show("Error reading language from settings: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+
+        Return language
+    End Function
+
+    ' Load translations from JSON
+    Private Sub LoadLanguagesFromJson(filename As String)
+        Try
+            Dim jsonString = File.ReadAllText(filename)
+            languages = JsonSerializer.Deserialize(Of Dictionary(Of String, Dictionary(Of String, String)))(jsonString)
+
+        Catch ex As Exception
+            MessageBox.Show("Error loading translations: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    ' Get translation for a specific key
+    Private Function GetTranslation(key As String) As String
+        Dim currentLanguage = GetLanguageFromSettings()
+        If languages.ContainsKey(currentLanguage) AndAlso languages(currentLanguage).ContainsKey(key) Then
+            Return languages(currentLanguage)(key)
+        Else
+            Return $"Missing translation: {key}"
+        End If
     End Function
 
 End Class

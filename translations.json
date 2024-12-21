@@ -1,6 +1,6 @@
 {
   "en-US": {
-    "main.title": "BMI Calculator",
+    "main.title": "BMIMe",
     "main.weighLabel": "Weight",
     "main.heightLabel": "Height",
     "main.calculate": "Calculate",
@@ -12,10 +12,26 @@
     "main.weighLabel_kg": "kg",
     "main.weighLabel_lbs": "lbs",
     "main.heightLabel_m": "m",
-    "main.heightLabel_in": "in"
+    "main.heightLabel_in": "in",
+     "updater.btnUpdate": "Download Update",
+ "updater.btnUpdate.install": "Install and Restart",
+ "updater.lblStatus.checking": "Checking for updates...",
+ "updater.lblStatus.available": "Update available",
+ "updater.lblStatus.none": "No update available.",
+ "updater.lblStatus.error": "Error checking for updates.",
+ "updater.lblStatus.downloading": "Downloading update...",
+ "updater.lblStatus.extracting": "Extracting update...",
+ "updater.lblStatus.downloaded": "Update downloaded.",
+ "updater.lblStatus.installing": "Installing update...",
+ "updater.lblStatus.copying": "Copying Files...",
+ "updater.lblStatus.finalizing": "Finalizing update...",
+ "updater.lblStatus.installed": "Update installed. Restarting application...",
+ "updater.lblStatus.updateFailed": "Update Failed.",
+ "updater.txtReleaseNotes.latest": "You are using the latest version.",
+ "updater.error.notInstalled": "BMIMe is not installed. (how did you get this?)"
   },
   "fil-PH": {
-    "main.title": "Kalkulator ng BMI",
+    "main.title": "BMIMe",
     "main.weighLabel": "Timbang",
     "main.heightLabel": "Taas",
     "main.calculate": "Kalkulahin",
@@ -27,6 +43,22 @@
     "main.weighLabel_kg": "kg",
     "main.weighLabel_lbs": "lbs",
     "main.heightLabel_m": "m",
-    "main.heightLabel_in": "in"
+    "main.heightLabel_in": "in",
+    "updater.btnUpdate": "I-download ang Update",
+    "updater.btnUpdate.install": "I-install at I-restart",
+    "updater.lblStatus.checking": "Tinitingnan kung may update...",
+    "updater.lblStatus.available": "Mayroong update",
+    "updater.lblStatus.none": "Walang update.",
+    "updater.lblStatus.error": "Error sa pagkuha ng mga update.",
+    "updater.lblStatus.downloading": "I-download ang update...",
+    "updater.lblStatus.extracting": "I-extract ang update...",
+    "updater.lblStatus.downloaded": "Na-download na ang update.",
+    "updater.lblStatus.installing": "I-install ang update...",
+    "updater.lblStatus.copying": "Kinokopya ang mga file...",
+    "updater.lblStatus.finalizing": "Tinatapos ang update...",
+    "updater.lblStatus.installed": "Na-install na ang update. I-restart ang application...",
+    "updater.lblStatus.updateFailed": "May mali sa update.",
+    "updater.txtReleaseNotes.latest": "Ika'y nasa latest version.",
+    "updater.error.notInstalled": "Hindi naka-install ang BMIMe. (paano mo ito nakuha?)"
   }
 }

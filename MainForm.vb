@@ -8,7 +8,6 @@
 '// Licensed to GMGuillergan LLC.
 '// https://github.com/jeonnotcool/BMI_Calculator
 
-
 Imports System.Globalization
 Imports System.Collections.Generic
 Imports System.IO

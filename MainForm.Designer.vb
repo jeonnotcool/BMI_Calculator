@@ -22,6 +22,7 @@ Partial Class MainForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.rbImperial = New System.Windows.Forms.RadioButton()
         Me.rbMetric = New System.Windows.Forms.RadioButton()
@@ -275,7 +276,7 @@ Partial Class MainForm
         Me.ImperialToolStripMenuItem.Size = New System.Drawing.Size(184, 22)
         Me.ImperialToolStripMenuItem.Text = "Imperial"
         '
-        'Form1
+        'MainForm
         '
         Me.AcceptButton = Me.calculate
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 15.0!)
@@ -297,8 +298,9 @@ Partial Class MainForm
         Me.Controls.Add(Me.txtWeight)
         Me.Controls.Add(Me.MenuStrip1)
         Me.Font = New System.Drawing.Font("Segoe UI Variable Text", 8.25!)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.MenuStrip1
-        Me.Name = "Form1"
+        Me.Name = "MainForm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Form1"
         Me.GroupBox1.ResumeLayout(False)

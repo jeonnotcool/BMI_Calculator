@@ -22,6 +22,7 @@ Partial Class Updater
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Updater))
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.txtReleaseNotes = New System.Windows.Forms.RichTextBox()
         Me.Label2 = New System.Windows.Forms.Label()
@@ -77,9 +78,9 @@ Partial Class Updater
         'btnUpdate
         '
         Me.btnUpdate.Font = New System.Drawing.Font("Segoe UI Variable Display", 10.0!)
-        Me.btnUpdate.Location = New System.Drawing.Point(68, 317)
+        Me.btnUpdate.Location = New System.Drawing.Point(55, 317)
         Me.btnUpdate.Name = "btnUpdate"
-        Me.btnUpdate.Size = New System.Drawing.Size(140, 41)
+        Me.btnUpdate.Size = New System.Drawing.Size(161, 41)
         Me.btnUpdate.TabIndex = 56
         Me.btnUpdate.Text = "Download Update"
         Me.btnUpdate.UseVisualStyleBackColor = True
@@ -139,6 +140,7 @@ Partial Class Updater
         Me.Controls.Add(Me.VersionLabel)
         Me.Controls.Add(Me.NameApp)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "Updater"
