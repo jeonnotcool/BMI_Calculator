@@ -22,22 +22,13 @@ Partial Class BMI_Result
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.Label1 = New System.Windows.Forms.Label()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.NameApp = New System.Windows.Forms.Label()
+        Me.Status = New System.Windows.Forms.Label()
+        Me.VersionLabel = New System.Windows.Forms.Label()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
-        '
-        'Label1
-        '
-        Me.Label1.Font = New System.Drawing.Font("Segoe UI Variable Display", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(12, 428)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(255, 39)
-        Me.Label1.TabIndex = 58
-        Me.Label1.Text = "Copyright © 2024 GMGuillergan LLC." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "All rights reserved."
-        Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Panel1
         '
@@ -70,15 +61,36 @@ Partial Class BMI_Result
         Me.NameApp.Text = "Your BMI is"
         Me.NameApp.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
+        'Status
+        '
+        Me.Status.BackColor = System.Drawing.Color.White
+        Me.Status.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.Status.Font = New System.Drawing.Font("Segoe UI Variable Display Semib", 15.0!, System.Drawing.FontStyle.Bold)
+        Me.Status.Location = New System.Drawing.Point(68, 284)
+        Me.Status.Name = "Status"
+        Me.Status.Size = New System.Drawing.Size(342, 98)
+        Me.Status.TabIndex = 62
+        '
+        'VersionLabel
+        '
+        Me.VersionLabel.Font = New System.Drawing.Font("Segoe UI Variable Display", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.VersionLabel.Location = New System.Drawing.Point(154, 240)
+        Me.VersionLabel.Name = "VersionLabel"
+        Me.VersionLabel.Size = New System.Drawing.Size(177, 30)
+        Me.VersionLabel.TabIndex = 63
+        Me.VersionLabel.Text = "You are in a normal range!"
+        Me.VersionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
         'BMI_Result
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer), CType(CType(243, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(484, 461)
+        Me.ClientSize = New System.Drawing.Size(484, 541)
+        Me.Controls.Add(Me.VersionLabel)
+        Me.Controls.Add(Me.Status)
         Me.Controls.Add(Me.Panel1)
-        Me.Controls.Add(Me.Label1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
         Me.MinimizeBox = False
@@ -91,8 +103,9 @@ Partial Class BMI_Result
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents Label1 As Label
     Friend WithEvents Panel1 As Panel
     Friend WithEvents Label2 As Label
     Friend WithEvents NameApp As Label
+    Friend WithEvents Status As Label
+    Friend WithEvents VersionLabel As Label
 End Class

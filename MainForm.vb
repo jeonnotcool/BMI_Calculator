@@ -105,8 +105,8 @@ Public Class MainForm
         SetLanguage("en-US")
     End Sub
 
-    ' Set language to Tagalog
-    Private Sub TagalogToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TagalogToolStripMenuItem.Click
+    ' Set language to Filipino
+    Private Sub FilipinoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FilipinoToolStripMenuItem.Click
         SetLanguage("fil-PH")
     End Sub
 
@@ -180,10 +180,10 @@ Public Class MainForm
 
         If currentLanguage = "en-US" Then
             EnglishToolStripMenuItem.Checked = True
-            TagalogToolStripMenuItem.Checked = False
+            FilipinoToolStripMenuItem.Checked = False
         ElseIf currentLanguage = "fil-PH" Then
             EnglishToolStripMenuItem.Checked = False
-            TagalogToolStripMenuItem.Checked = True
+            FilipinoToolStripMenuItem.Checked = True
         End If
 
         ' Update labels based on unit system
@@ -296,8 +296,8 @@ Public Class MainForm
 
     ' Update UI and save settings
     Private Sub UpdateUIAndSaveSettings()
-        LoadLocalizedStrings()
         SaveSettings()
+        LoadLocalizedStrings()
     End Sub
 
     ' Set language and update UI
@@ -401,6 +401,12 @@ Public Class MainForm
     Private Sub LaunchBMIResultTestToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LaunchBMIResultTestToolStripMenuItem.Click
         BMI_Result.ShowDialog()
     End Sub
+
+    Private Sub LaunchOnboardingToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LaunchOnboardingToolStripMenuItem.Click
+        Onboarding.ShowDialog()
+    End Sub
+
+
 End Class
 
 ' UserSettings class to represent settings

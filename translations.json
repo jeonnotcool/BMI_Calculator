@@ -32,7 +32,21 @@
     "updater.txtReleaseNotes.latest": "You are using the latest version.",
     "updater.error.notProperlyInstalled": "BMIMe encountered a problem accessing the core registry of the application. This is due the setup was not able to properly set the required keys and may prevent the application from functioning correctly. Please reinstall the application and try again.",
     "updater.txtReleaseNotes": "Release Notes",
-    "updater.txtReleaseNotes.checking": "Please wait..."
+    "updater.txtReleaseNotes.checking": "Please wait...",
+    "welcome_title": "Welcome to BMIMe",
+    "welcome_body": "Before we dive in, let’s get you all set up.",
+    "welcome_letsgo": "Let's Go!",
+    "welcome_grouplang": "Choose your language.",
+    "welcome_english": "English",
+    "welcome_filipino": "Filipino",
+    "name_title": "Who are you?",
+    "name_body": "Of course, we have to know your name so that you know that your health is linked to you.",
+    "name_body2": "Type your name down below.",
+    "name_next": "Next",
+    "interrupt_message": "It seems that the BMIMe setup was interrupted. Your progress has been restored.",
+    "club_title": "Welcome to the Club,",
+    "club_body": "Health is super important! That's why BMIMe is here to help you on how to make yourself more ✨healthy✨.",
+    "club_u": "This is u while using BMIMe"
   },
   "fil-PH": {
     "main.title": "BMIMe",
@@ -67,6 +81,20 @@
     "updater.txtReleaseNotes.latest": "Ika'y nasa latest version.",
     "updater.error.notProperlyInstalled": "Ang BMIMe ay nakaranas ng problema sa pag-access ng core registry ng application. Ito ay dahil sa hindi tamang pag-set up ng mga kinakailangang key at maaaring magdulot ng problema sa tamang pag-andar ng application. Mangyaring i-reinstall ang application at subukang muli.",
     "updater.txtReleaseNotes": "Release Notes",
-    "updater.txtReleaseNotes.checking": "Sandali..."
+    "updater.txtReleaseNotes.checking": "Sandali...",
+    "welcome_title": "Maligayang pagdating sa BMIMe",
+    "welcome_body": "Bago tayo magsimula, ayusin muna natin ang lahat.",
+    "welcome_letsgo": "Tara!",
+    "welcome_grouplang": "Piliin ang iyong wika.",
+    "welcome_english": "Ingles",
+    "welcome_filipino": "Filipino",
+    "name_title": "Sino ka?",
+    "name_body": "Syempre, kailangan naming malaman ang iyong pangalan upang malaman mo na ang iyong kalusugan ay konektado sa iyo.",
+    "name_body2": "Ilagay ang iyong pangalan sa ibaba.",
+    "name_next": "Sunod",
+    "interrupt_message": "Mukhang hindi natuloy ang pag-setup ng BMIMe. Ibinalik ang iyong naging progress.",
+    "club_title": "Maligayang pagdating sa Club,",
+    "club_body": "Ang kalusugan ay napakahalaga! Kaya nandito ang BMIMe upang tulungan ka kung paano mo mapapanatili ang iyong sarili na maging ✨malusog✨.",
+    "club_u": "Ito ka habang gumagamit ng BMIMe"
   }
 }

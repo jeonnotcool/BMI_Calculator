@@ -41,19 +41,20 @@ Partial Class MainForm
         Me.txtWeight = New System.Windows.Forms.TextBox()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CheckForUpdatesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.LanguageToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EnglishToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.TagalogToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.FilipinoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EnterTestValueToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MetricToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ImperialToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.CheckForUpdatesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.LaunchBMIResultTestToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.LaunchOnboardingToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.aShort = New System.Windows.Forms.Label()
         Me.ageLabel = New System.Windows.Forms.Label()
         Me.txtAge = New System.Windows.Forms.TextBox()
-        Me.LaunchBMIResultTestToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.GroupBox1.SuspendLayout()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
@@ -221,23 +222,29 @@ Partial Class MainForm
         '
         'FileToolStripMenuItem
         '
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CheckForUpdatesToolStripMenuItem, Me.AboutToolStripMenuItem, Me.LanguageToolStripMenuItem, Me.ExitToolStripMenuItem, Me.EnterTestValueToolStripMenuItem, Me.LaunchBMIResultTestToolStripMenuItem})
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CheckForUpdatesToolStripMenuItem, Me.AboutToolStripMenuItem, Me.LanguageToolStripMenuItem, Me.ExitToolStripMenuItem, Me.EnterTestValueToolStripMenuItem, Me.LaunchBMIResultTestToolStripMenuItem, Me.LaunchOnboardingToolStripMenuItem})
         Me.FileToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI Variable Text", 9.0!)
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
         Me.FileToolStripMenuItem.Text = "File"
         '
+        'CheckForUpdatesToolStripMenuItem
+        '
+        Me.CheckForUpdatesToolStripMenuItem.Name = "CheckForUpdatesToolStripMenuItem"
+        Me.CheckForUpdatesToolStripMenuItem.Size = New System.Drawing.Size(248, 22)
+        Me.CheckForUpdatesToolStripMenuItem.Text = "Check for Updates"
+        '
         'AboutToolStripMenuItem
         '
         Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
-        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(195, 22)
+        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(248, 22)
         Me.AboutToolStripMenuItem.Text = "About"
         '
         'LanguageToolStripMenuItem
         '
-        Me.LanguageToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EnglishToolStripMenuItem, Me.TagalogToolStripMenuItem})
+        Me.LanguageToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EnglishToolStripMenuItem, Me.FilipinoToolStripMenuItem})
         Me.LanguageToolStripMenuItem.Name = "LanguageToolStripMenuItem"
-        Me.LanguageToolStripMenuItem.Size = New System.Drawing.Size(195, 22)
+        Me.LanguageToolStripMenuItem.Size = New System.Drawing.Size(248, 22)
         Me.LanguageToolStripMenuItem.Text = "Language"
         '
         'EnglishToolStripMenuItem
@@ -246,23 +253,23 @@ Partial Class MainForm
         Me.EnglishToolStripMenuItem.Size = New System.Drawing.Size(115, 22)
         Me.EnglishToolStripMenuItem.Text = "English"
         '
-        'TagalogToolStripMenuItem
+        'FilipinoToolStripMenuItem
         '
-        Me.TagalogToolStripMenuItem.Name = "TagalogToolStripMenuItem"
-        Me.TagalogToolStripMenuItem.Size = New System.Drawing.Size(115, 22)
-        Me.TagalogToolStripMenuItem.Text = "Tagalog"
+        Me.FilipinoToolStripMenuItem.Name = "FilipinoToolStripMenuItem"
+        Me.FilipinoToolStripMenuItem.Size = New System.Drawing.Size(115, 22)
+        Me.FilipinoToolStripMenuItem.Text = "Filipino"
         '
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(195, 22)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(248, 22)
         Me.ExitToolStripMenuItem.Text = "Exit"
         '
         'EnterTestValueToolStripMenuItem
         '
         Me.EnterTestValueToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MetricToolStripMenuItem, Me.ImperialToolStripMenuItem})
         Me.EnterTestValueToolStripMenuItem.Name = "EnterTestValueToolStripMenuItem"
-        Me.EnterTestValueToolStripMenuItem.Size = New System.Drawing.Size(195, 22)
+        Me.EnterTestValueToolStripMenuItem.Size = New System.Drawing.Size(248, 22)
         Me.EnterTestValueToolStripMenuItem.Text = "Enter Test Value"
         '
         'MetricToolStripMenuItem
@@ -281,11 +288,19 @@ Partial Class MainForm
         Me.ImperialToolStripMenuItem.Size = New System.Drawing.Size(184, 22)
         Me.ImperialToolStripMenuItem.Text = "Imperial"
         '
-        'CheckForUpdatesToolStripMenuItem
+        'LaunchBMIResultTestToolStripMenuItem
         '
-        Me.CheckForUpdatesToolStripMenuItem.Name = "CheckForUpdatesToolStripMenuItem"
-        Me.CheckForUpdatesToolStripMenuItem.Size = New System.Drawing.Size(195, 22)
-        Me.CheckForUpdatesToolStripMenuItem.Text = "Check for Updates"
+        Me.LaunchBMIResultTestToolStripMenuItem.Name = "LaunchBMIResultTestToolStripMenuItem"
+        Me.LaunchBMIResultTestToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.[End]), System.Windows.Forms.Keys)
+        Me.LaunchBMIResultTestToolStripMenuItem.Size = New System.Drawing.Size(248, 22)
+        Me.LaunchBMIResultTestToolStripMenuItem.Text = "Launch BMI Result Test"
+        '
+        'LaunchOnboardingToolStripMenuItem
+        '
+        Me.LaunchOnboardingToolStripMenuItem.Name = "LaunchOnboardingToolStripMenuItem"
+        Me.LaunchOnboardingToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.Insert), System.Windows.Forms.Keys)
+        Me.LaunchOnboardingToolStripMenuItem.Size = New System.Drawing.Size(248, 22)
+        Me.LaunchOnboardingToolStripMenuItem.Text = "Launch Onboarding"
         '
         'aShort
         '
@@ -313,12 +328,6 @@ Partial Class MainForm
         Me.txtAge.Name = "txtAge"
         Me.txtAge.Size = New System.Drawing.Size(84, 32)
         Me.txtAge.TabIndex = 49
-        '
-        'LaunchBMIResultTestToolStripMenuItem
-        '
-        Me.LaunchBMIResultTestToolStripMenuItem.Name = "LaunchBMIResultTestToolStripMenuItem"
-        Me.LaunchBMIResultTestToolStripMenuItem.Size = New System.Drawing.Size(195, 22)
-        Me.LaunchBMIResultTestToolStripMenuItem.Text = "Launch BMI Result Test"
         '
         'MainForm
         '
@@ -380,7 +389,7 @@ Partial Class MainForm
     Friend WithEvents AboutToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents LanguageToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents EnglishToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents TagalogToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents FilipinoToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ExitToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents EnterTestValueToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents MetricToolStripMenuItem As ToolStripMenuItem
@@ -390,4 +399,5 @@ Partial Class MainForm
     Friend WithEvents ageLabel As Label
     Friend WithEvents txtAge As TextBox
     Friend WithEvents LaunchBMIResultTestToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents LaunchOnboardingToolStripMenuItem As ToolStripMenuItem
 End Class

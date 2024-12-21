@@ -88,6 +88,9 @@
   <PropertyGroup>
     <GenerateManifests>false</GenerateManifests>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>B %281%29.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=9.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Bcl.AsyncInterfaces.9.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
@@ -174,6 +177,12 @@
     <Compile Include="BMI_Result.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Onboarding.Designer.vb">
+      <DependentUpon>Onboarding.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Onboarding.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MainForm.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -220,6 +229,9 @@
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Onboarding.resx">
+      <DependentUpon>Onboarding.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Updater.resx">
       <DependentUpon>Updater.vb</DependentUpon>
     </EmbeddedResource>
@@ -252,9 +264,18 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="B %281%29.ico" />
     <Content Include="Resources\B %281%29.png" />
     <Content Include="Resources\B.png" />
     <Content Include="Resources\bmi.jpg" />
+    <None Include="Resources\thisisu.jpg" />
+    <None Include="Resources\welcometotheclub.jpg" />
+    <None Include="Resources\erm_actually.jpg" />
+    <None Include="Resources\icons8-right-30.png" />
+    <None Include="Resources\icons8-right-60.png" />
+    <None Include="Resources\Group 12.png" />
+    <None Include="Resources\Group 11.png" />
+    <None Include="Resources\gradient.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.8">
