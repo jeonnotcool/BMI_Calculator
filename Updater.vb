@@ -13,6 +13,7 @@ Imports System.Drawing.Drawing2D
 Imports System.Diagnostics
 Imports System.Text.Json
 Imports System.Threading
+Imports Microsoft.Win32
 
 Public Class Updater
 
@@ -26,9 +27,9 @@ Public Class Updater
     Private Const GitHubRepo As String = "jeonnotcool/BMI_Calculator"
     Private languages As Dictionary(Of String, Dictionary(Of String, String))
 
-    Private Const SettingsFile As String = "settings.txt"
+    Private Const SettingsFile As String = "settings.json"
 
-    Private Async Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Async Sub Updater_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         btnUpdate.Enabled = False
         ProgressBar1.Value = 0
         VersionLabel.Text = $"Version {CurrentVersion} (Alpha)" ' used this instead because concatenation is complicated
@@ -56,7 +57,21 @@ Public Class Updater
     Private Async Function CheckForUpdates() As Task
         Try
             lblStatus.Text = GetTranslation("updater.lblStatus.checking")
+            txtReleaseNotes.Text = GetTranslation("updater.txtReleaseNotes.checking")
             Await Task.Delay(1000) ' Wait to initialize
+
+            Dim setupInstallWasCorrect As Integer = 0
+            Using key As RegistryKey = Registry.CurrentUser.OpenSubKey("Software\GMGuillergan\BMIMe")
+                If key IsNot Nothing Then
+                    setupInstallWasCorrect = Convert.ToInt32(key.GetValue("SetupInstallWasCorrect", 0))
+                End If
+            End Using
+
+            If setupInstallWasCorrect <> 1 Then
+                lblStatus.Text = GetTranslation("updater.lblStatus.updateFailed")
+                MessageBox.Show(GetTranslation("updater.error.notProperlyInstalled"), "BMIMe", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                Return
+            End If
 
             Using client As New HttpClient()
                 client.DefaultRequestHeaders.Add("User-Agent", "request")
@@ -136,6 +151,7 @@ Public Class Updater
 
     Private Sub InstallAndRestart()
         Try
+
             Dim currentPath As String = Application.StartupPath
             Dim exePath As String = Path.Combine(currentPath, "BMIMe.exe")
 
@@ -158,8 +174,8 @@ Public Class Updater
                 Dim fileName As String = Path.GetFileName(filez)
                 Dim destinationFile As String = Path.Combine(currentPath, fileName)
                 If Not fileName.Equals("gmupdateapp.exe", StringComparison.OrdinalIgnoreCase) AndAlso
-                   Not fileName.Equals("Newtonsoft.Json.dll", StringComparison.OrdinalIgnoreCase) AndAlso
-                   Not fileName.Equals("Newtonsoft.Json.xml", StringComparison.OrdinalIgnoreCase) Then
+                           Not fileName.Equals("Newtonsoft.Json.dll", StringComparison.OrdinalIgnoreCase) AndAlso
+                           Not fileName.Equals("Newtonsoft.Json.xml", StringComparison.OrdinalIgnoreCase) Then
                     File.Copy(filez, destinationFile, True)
                 End If
                 lblStatus.Text = GetTranslation("updater.lblStatus.finalizing")
@@ -211,17 +227,17 @@ Public Class Updater
         End If
     End Sub
 
-
     ' Get language from settings file
     Private Function GetLanguageFromSettings() As String
         Dim language As String = "en-US" ' Default
 
         Try
             If File.Exists(SettingsFile) Then
-                Using reader As New StreamReader(SettingsFile)
-                    reader.ReadLine() ' Skip unit system line
-                    language = reader.ReadLine() ' Read language line
-                End Using
+                Dim jsonString = File.ReadAllText(SettingsFile)
+                Dim settings = JsonSerializer.Deserialize(Of Dictionary(Of String, String))(jsonString)
+                If settings.ContainsKey("Language") Then
+                    language = settings("Language")
+                End If
             End If
         Catch ex As Exception
             MessageBox.Show("Error reading language from settings: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)

@@ -14,7 +14,6 @@ Imports System.IO
 Imports System.Text.Json
 Imports System.Threading
 
-
 Public Class MainForm
     ' Version -- Change the version in My Project -> Settings -> VersionNumber
     Private ReadOnly Property CurrentVersion As String
@@ -24,12 +23,13 @@ Public Class MainForm
     End Property
 
     ' Constants
-    Private Const SettingsFile As String = "settings.txt"
+    Private Const SettingsFile As String = "settings.json"
     Private Const POUNDS_TO_KG As Double = 0.453592
     Private Const INCHES_TO_METERS As Double = 0.0254
 
     ' Variables
     Private languages As Dictionary(Of String, Dictionary(Of String, String))
+    Private UName As String
 
     ' Load event
     Private Sub BMICalculator_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -85,7 +85,6 @@ Public Class MainForm
         Status.BackColor = Color.White
     End Sub
 
-
     ' Exit application
     Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
         Application.Exit()
@@ -93,8 +92,13 @@ Public Class MainForm
 
     ' About dialog (implementation not provided)
     Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
+        About.ShowDialog()
+    End Sub
+
+    Private Sub CheckForUpdatesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CheckForUpdatesToolStripMenuItem.Click
         Updater.ShowDialog()
     End Sub
+
 
     ' Set language to English
     Private Sub EnglishToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EnglishToolStripMenuItem.Click
@@ -104,7 +108,6 @@ Public Class MainForm
     ' Set language to Tagalog
     Private Sub TagalogToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TagalogToolStripMenuItem.Click
         SetLanguage("fil-PH")
-
     End Sub
 
     ' Update UI and save settings when unit system changes
@@ -121,8 +124,6 @@ Public Class MainForm
         End If
         UpdateUIAndSaveSettings()
     End Sub
-
-
 
     ' Convert units in the text boxes
     Private Sub ConvertUnits(convertToMetric As Boolean)
@@ -152,43 +153,46 @@ Public Class MainForm
         End Try
     End Sub
 
-
-
     ' --- Helper Methods ---
 
     ' Load localized strings
     Private Sub LoadLocalizedStrings()
         Dim currentLanguage = GetLanguageFromSettings()
-        If languages.ContainsKey(currentLanguage) Then
-            Dim translations = languages(currentLanguage)
+        If currentLanguage Is Nothing Then
+            MessageBox.Show("Error: Language setting is null.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return
+        End If
 
-            main_title.Text = translations("main.title")
-            calculate.Text = translations("main.calculate")
-            reset.Text = translations("main.reset")
-            weighLabel.Text = translations("main.weighLabel")
-            heightLabel.Text = translations("main.heightLabel")
-
-            If currentLanguage = "en-US" Then
-                EnglishToolStripMenuItem.Checked = True
-                TagalogToolStripMenuItem.Checked = False
-            ElseIf currentLanguage = "fil-PH" Then
-                EnglishToolStripMenuItem.Checked = False
-                TagalogToolStripMenuItem.Checked = True
-            End If
-
-            ' Update labels based on unit system
-            If rbMetric.Checked Then
-                wShort.Text = translations("main.weighLabel_kg")
-                hShort.Text = translations("main.heightLabel_m")
-            Else
-                wShort.Text = translations("main.weighLabel_lbs")
-                hShort.Text = translations("main.heightLabel_in")
-            End If
-
-
-
-        Else
+        If languages Is Nothing OrElse Not languages.ContainsKey(currentLanguage) Then
             MessageBox.Show($"Language '{currentLanguage}' not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return
+        End If
+
+        Dim translations = languages(currentLanguage)
+
+        main_title.Text = translations("main.title")
+        calculate.Text = translations("main.calculate")
+        reset.Text = translations("main.reset")
+        weighLabel.Text = translations("main.weighLabel")
+        heightLabel.Text = translations("main.heightLabel")
+        ageLabel.Text = translations("main.ageLabel")
+        aShort.Text = translations("main.aShort")
+
+        If currentLanguage = "en-US" Then
+            EnglishToolStripMenuItem.Checked = True
+            TagalogToolStripMenuItem.Checked = False
+        ElseIf currentLanguage = "fil-PH" Then
+            EnglishToolStripMenuItem.Checked = False
+            TagalogToolStripMenuItem.Checked = True
+        End If
+
+        ' Update labels based on unit system
+        If rbMetric.Checked Then
+            wShort.Text = translations("main.weighLabel_kg")
+            hShort.Text = translations("main.heightLabel_m")
+        Else
+            wShort.Text = translations("main.weighLabel_lbs")
+            hShort.Text = translations("main.heightLabel_in")
         End If
     End Sub
 
@@ -198,10 +202,9 @@ Public Class MainForm
 
         Try
             If File.Exists(SettingsFile) Then
-                Using reader As New StreamReader(SettingsFile)
-                    reader.ReadLine() ' Skip unit system line
-                    language = reader.ReadLine() ' Read language line
-                End Using
+                Dim jsonString = File.ReadAllText(SettingsFile)
+                Dim settings = JsonSerializer.Deserialize(Of UserSettings)(jsonString)
+                language = settings.Language
             End If
         Catch ex As Exception
             MessageBox.Show("Error reading language from settings: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -209,8 +212,6 @@ Public Class MainForm
 
         Return language
     End Function
-
-
 
     ' Update status label and color
     Private Sub UpdateStatus(bmi As Double)
@@ -232,11 +233,71 @@ Public Class MainForm
         End If
     End Sub
 
+    Private Function AssessHealthRisks(bmi As Double, gender As String, age As Integer) As String
+        Dim riskAssessment As String = ""
+
+        If bmi < 18.5 Then
+            riskAssessment = "You might be at risk of malnutrition, weakened immune system, and other health issues."
+        ElseIf bmi >= 18.5 And bmi <= 24.9 Then
+            riskAssessment = "You're generally healthy. Keep it up!"
+        ElseIf bmi >= 25 And bmi <= 29.9 Then
+            riskAssessment = "You might be at increased risk of heart disease, stroke, and type 2 diabetes."
+        ElseIf bmi >= 30 Then
+            riskAssessment = "You might be at significantly increased risk of serious health conditions."
+        End If
+
+        ' Add gender-specific considerations
+        If gender = "female" Then
+            If bmi < 18.5 Then
+                riskAssessment &= " Especially at risk for irregular periods and osteoporosis."
+            ElseIf bmi >= 25 Then
+                riskAssessment &= " Increased risk of polycystic ovary syndrome (PCOS) and pregnancy complications."
+            End If
+        End If
+
+        ' Add age-specific considerations
+        If age < 18 Then
+            riskAssessment &= " Pay attention to growth and development. Consult a pediatrician for advice."
+        ElseIf age >= 65 Then
+            riskAssessment &= " Consider age-related health issues like sarcopenia and osteoporosis. Consult a healthcare provider."
+        End If
+
+        Return riskAssessment
+    End Function
+
+    Private Function GenerateRecommendations(healthRisks As String, gender As String, age As Integer) As String
+        Dim recommendations As String = ""
+
+        If healthRisks.Contains("Underweight") Then
+            recommendations = "Consult a healthcare provider. Increase calorie intake, focus on nutrient-dense foods, and engage in gentle exercise."
+        ElseIf healthRisks.Contains("Normal Weight") Then
+            recommendations = "Maintain a healthy lifestyle, prioritize nutrient-rich foods, and engage in moderate physical activity."
+        ElseIf healthRisks.Contains("Overweight") OrElse healthRisks.Contains("Obese") Then
+            recommendations = "Consult a healthcare provider. Reduce calorie intake, increase physical activity, and adopt a balanced diet. Consider seeking support from a registered dietitian."
+        End If
+
+        ' Add gender-specific recommendations
+        If gender = "female" And healthRisks.Contains("Underweight") Then
+            recommendations &= " Pay attention to menstrual health and bone health."
+        ElseIf gender = "female" And healthRisks.Contains("Overweight") OrElse healthRisks.Contains("Obese") Then
+            recommendations &= " Consider the impact on fertility and pregnancy."
+        End If
+
+        ' Add age-specific recommendations
+        If age < 18 Then
+            recommendations &= " Prioritize healthy growth and development. Avoid unhealthy weight gain or loss."
+        ElseIf age >= 65 Then
+            recommendations &= " Consider age-related factors like metabolism and muscle mass. Consult a healthcare provider for personalized advice."
+        End If
+
+        Return recommendations
+    End Function
+
+
     ' Update UI and save settings
     Private Sub UpdateUIAndSaveSettings()
         LoadLocalizedStrings()
         SaveSettings()
-
     End Sub
 
     ' Set language and update UI
@@ -246,20 +307,15 @@ Public Class MainForm
         LoadLocalizedStrings()
     End Sub
 
-
-
     ' Load user settings
     Private Sub LoadSettings()
         Try
             If File.Exists(SettingsFile) Then
-                Using reader As New StreamReader(SettingsFile)
-                    Dim unitSystem As String = reader.ReadLine()
-                    Dim language As String = reader.ReadLine()
+                Dim jsonString = File.ReadAllText(SettingsFile)
+                Dim settings = JsonSerializer.Deserialize(Of UserSettings)(jsonString)
 
-                    ' Set unit system and language WITHOUT triggering events
-                    SetUnitSystemAndLanguage(unitSystem, language)
-
-                End Using
+                ' Set unit system and language WITHOUT triggering events
+                SetUnitSystemAndLanguage(settings.UnitSystem, settings.Language)
             Else
                 ' Use default settings
                 MessageBox.Show("Settings file not found. Using default settings.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -268,20 +324,40 @@ Public Class MainForm
                 SetUnitSystemAndLanguage("Metric", "en-US")
                 UpdateUIAndSaveSettings()
             End If
+        Catch ex As FileNotFoundException
+            MessageBox.Show("Settings file not found. Using default settings.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            ' Set defaults WITHOUT triggering events
+            SetUnitSystemAndLanguage("Metric", "en-US")
+            UpdateUIAndSaveSettings()
+        Catch ex As JsonException
+            MessageBox.Show("Error parsing settings file. Using default settings.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            ' Set defaults WITHOUT triggering events
+            SetUnitSystemAndLanguage("Metric", "en-US")
+            UpdateUIAndSaveSettings()
         Catch ex As Exception
-            MessageBox.Show("Error loading settings: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("An unexpected error occurred while loading settings: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            ' Set defaults WITHOUT triggering events
+            SetUnitSystemAndLanguage("Metric", "en-US")
+            UpdateUIAndSaveSettings()
         End Try
     End Sub
 
     ' Save user settings
     Private Sub SaveSettings()
         Try
-            Using writer As New StreamWriter(SettingsFile)
-                writer.WriteLine(If(rbMetric.Checked, "Metric", "Imperial"))
-                writer.WriteLine(Thread.CurrentThread.CurrentUICulture.Name)
-            End Using
+            Dim settings As New UserSettings With {
+                .UnitSystem = If(rbMetric.Checked, "Metric", "Imperial"),
+                .Language = Thread.CurrentThread.CurrentUICulture.Name,
+                .UserName = UName
+            }
+            Dim jsonString = JsonSerializer.Serialize(settings)
+            File.WriteAllText(SettingsFile, jsonString)
+        Catch ex As UnauthorizedAccessException
+            MessageBox.Show("Error saving settings: Access to the path is denied.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Catch ex As IOException
+            MessageBox.Show("Error saving settings: An I/O error occurred.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Catch ex As Exception
-            MessageBox.Show("Error saving settings: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("An unexpected error occurred while saving settings: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
@@ -311,7 +387,6 @@ Public Class MainForm
         Thread.CurrentThread.CurrentUICulture = New CultureInfo(languageCode)
     End Sub
 
-
     ' Test Values
     Private Sub MetricToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MetricToolStripMenuItem.Click
         txtWeight.Text = "68"
@@ -323,5 +398,15 @@ Public Class MainForm
         txtHeight.Text = "66.93"
     End Sub
 
+    Private Sub LaunchBMIResultTestToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LaunchBMIResultTestToolStripMenuItem.Click
+        BMI_Result.ShowDialog()
+    End Sub
+End Class
 
+' UserSettings class to represent settings
+Public Class UserSettings
+    Public Property UnitSystem As String
+    Public Property Language As String
+
+    Public Property UserName As String
 End Class
