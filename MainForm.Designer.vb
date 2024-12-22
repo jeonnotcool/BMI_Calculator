@@ -250,13 +250,13 @@ Partial Class MainForm
         'EnglishToolStripMenuItem
         '
         Me.EnglishToolStripMenuItem.Name = "EnglishToolStripMenuItem"
-        Me.EnglishToolStripMenuItem.Size = New System.Drawing.Size(115, 22)
+        Me.EnglishToolStripMenuItem.Size = New System.Drawing.Size(113, 22)
         Me.EnglishToolStripMenuItem.Text = "English"
         '
         'FilipinoToolStripMenuItem
         '
         Me.FilipinoToolStripMenuItem.Name = "FilipinoToolStripMenuItem"
-        Me.FilipinoToolStripMenuItem.Size = New System.Drawing.Size(115, 22)
+        Me.FilipinoToolStripMenuItem.Size = New System.Drawing.Size(113, 22)
         Me.FilipinoToolStripMenuItem.Text = "Filipino"
         '
         'ExitToolStripMenuItem

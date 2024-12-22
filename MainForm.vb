@@ -406,7 +406,6 @@ Public Class MainForm
         Onboarding.ShowDialog()
     End Sub
 
-
 End Class
 
 ' UserSettings class to represent settings
