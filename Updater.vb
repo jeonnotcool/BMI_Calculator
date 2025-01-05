@@ -33,25 +33,25 @@ Public Class Updater
         btnUpdate.Enabled = False
         ProgressBar1.Value = 0
         VersionLabel.Text = $"Version {CurrentVersion} (Alpha)" ' used this instead because concatenation is complicated
-        MakePanelRounded(Panel1)
+        Round(Panel1)
         LoadLanguagesFromJson("translations.json")
         LoadLocalizedStrings()
         Await CheckForUpdates()
     End Sub
 
-    Private Sub MakePanelRounded(panel As Panel)
+    Private Sub Round(control As Control)
         Dim radius As Integer = 20
         Dim path As New GraphicsPath()
         path.StartFigure()
         path.AddArc(New Rectangle(0, 0, radius, radius), 180, 90)
-        path.AddLine(radius, 0, panel.Width - radius, 0)
-        path.AddArc(New Rectangle(panel.Width - radius, 0, radius, radius), -90, 90)
-        path.AddLine(panel.Width, radius, panel.Width, panel.Height - radius)
-        path.AddArc(New Rectangle(panel.Width - radius, panel.Height - radius, radius, radius), 0, 90)
-        path.AddLine(panel.Width - radius, panel.Height, radius, panel.Height)
-        path.AddArc(New Rectangle(0, panel.Height - radius, radius, radius), 90, 90)
+        path.AddLine(radius, 0, control.Width - radius, 0)
+        path.AddArc(New Rectangle(control.Width - radius, 0, radius, radius), -90, 90)
+        path.AddLine(control.Width, radius, control.Width, control.Height - radius)
+        path.AddArc(New Rectangle(control.Width - radius, control.Height - radius, radius, radius), 0, 90)
+        path.AddLine(control.Width - radius, control.Height, radius, control.Height)
+        path.AddArc(New Rectangle(0, control.Height - radius, radius, radius), 90, 90)
         path.CloseFigure()
-        panel.Region = New Region(path)
+        control.Region = New Region(path)
     End Sub
 
     Private Async Function CheckForUpdates() As Task
@@ -234,10 +234,13 @@ Public Class Updater
         Try
             If File.Exists(SettingsFile) Then
                 Dim jsonString = File.ReadAllText(SettingsFile)
-                Dim settings = JsonSerializer.Deserialize(Of Dictionary(Of String, String))(jsonString)
-                If settings.ContainsKey("Language") Then
-                    language = settings("Language")
-                End If
+                Using document As JsonDocument = JsonDocument.Parse(jsonString)
+                    Dim root = document.RootElement
+                    Dim languageElement As JsonElement
+                    If root.TryGetProperty("Language", languageElement) AndAlso languageElement.ValueKind = JsonValueKind.String Then
+                        language = languageElement.GetString()
+                    End If
+                End Using
             End If
         Catch ex As Exception
             MessageBox.Show("Error reading language from settings: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -245,6 +248,7 @@ Public Class Updater
 
         Return language
     End Function
+
 
     ' Load translations from JSON
     Private Sub LoadLanguagesFromJson(filename As String)

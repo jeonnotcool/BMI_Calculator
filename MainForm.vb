@@ -13,6 +13,7 @@ Imports System.Collections.Generic
 Imports System.IO
 Imports System.Text.Json
 Imports System.Threading
+Imports System.Windows.Forms
 
 Public Class MainForm
     ' Version -- Change the version in My Project -> Settings -> VersionNumber
@@ -57,7 +58,7 @@ Public Class MainForm
             End If
 
             ' Calculate BMI
-            Dim bmi As Double = weight / (height * height)
+            Dim bmi = weight / (height * height)
             calculated.Text = String.Format("{0:f}", bmi)
 
             ' Update status label and color
@@ -85,45 +86,7 @@ Public Class MainForm
         Status.BackColor = Color.White
     End Sub
 
-    ' Exit application
-    Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
-        Application.Exit()
-    End Sub
 
-    ' About dialog (implementation not provided)
-    Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
-        About.ShowDialog()
-    End Sub
-
-    Private Sub CheckForUpdatesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CheckForUpdatesToolStripMenuItem.Click
-        Updater.ShowDialog()
-    End Sub
-
-
-    ' Set language to English
-    Private Sub EnglishToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EnglishToolStripMenuItem.Click
-        SetLanguage("en-US")
-    End Sub
-
-    ' Set language to Filipino
-    Private Sub FilipinoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FilipinoToolStripMenuItem.Click
-        SetLanguage("fil-PH")
-    End Sub
-
-    ' Update UI and save settings when unit system changes
-    Private Sub rbMetric_CheckedChanged(sender As Object, e As EventArgs) Handles rbMetric.CheckedChanged
-        If rbMetric.Checked Then ' Only convert if the radio button is checked
-            ConvertUnits(convertToMetric:=True)
-        End If
-        UpdateUIAndSaveSettings()
-    End Sub
-
-    Private Sub rbImperial_CheckedChanged(sender As Object, e As EventArgs) Handles rbImperial.CheckedChanged
-        If rbImperial.Checked Then ' Only convert if the radio button is checked
-            ConvertUnits(convertToMetric:=False)
-        End If
-        UpdateUIAndSaveSettings()
-    End Sub
 
     ' Convert units in the text boxes
     Private Sub ConvertUnits(convertToMetric As Boolean)
@@ -169,8 +132,6 @@ Public Class MainForm
         End If
 
         Dim translations = languages(currentLanguage)
-
-        main_title.Text = translations("main.title")
         calculate.Text = translations("main.calculate")
         reset.Text = translations("main.reset")
         weighLabel.Text = translations("main.weighLabel")
@@ -178,13 +139,7 @@ Public Class MainForm
         ageLabel.Text = translations("main.ageLabel")
         aShort.Text = translations("main.aShort")
 
-        If currentLanguage = "en-US" Then
-            EnglishToolStripMenuItem.Checked = True
-            FilipinoToolStripMenuItem.Checked = False
-        ElseIf currentLanguage = "fil-PH" Then
-            EnglishToolStripMenuItem.Checked = False
-            FilipinoToolStripMenuItem.Checked = True
-        End If
+
 
         ' Update labels based on unit system
         If rbMetric.Checked Then
@@ -294,19 +249,6 @@ Public Class MainForm
     End Function
 
 
-    ' Update UI and save settings
-    Private Sub UpdateUIAndSaveSettings()
-        SaveSettings()
-        LoadLocalizedStrings()
-    End Sub
-
-    ' Set language and update UI
-    Private Sub SetLanguage(languageCode As String)
-        Thread.CurrentThread.CurrentUICulture = New CultureInfo(languageCode)
-        SaveSettings()
-        LoadLocalizedStrings()
-    End Sub
-
     ' Load user settings
     Private Sub LoadSettings()
         Try
@@ -314,52 +256,21 @@ Public Class MainForm
                 Dim jsonString = File.ReadAllText(SettingsFile)
                 Dim settings = JsonSerializer.Deserialize(Of UserSettings)(jsonString)
 
-                ' Set unit system and language WITHOUT triggering events
-                SetUnitSystemAndLanguage(settings.UnitSystem, settings.Language)
+                ' Validate settings
+                If settings Is Nothing OrElse String.IsNullOrEmpty(settings.UnitSystem) OrElse String.IsNullOrEmpty(settings.Language) Then
+                    Throw New JsonException("Settings file is missing required fields.")
+                End If
+
             Else
                 ' Use default settings
-                MessageBox.Show("Settings file not found. Using default settings.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                MessageBox.Show("Settings file not found.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-                ' Set defaults WITHOUT triggering events
-                SetUnitSystemAndLanguage("Metric", "en-US")
-                UpdateUIAndSaveSettings()
             End If
         Catch ex As FileNotFoundException
-            MessageBox.Show("Settings file not found. Using default settings.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            ' Set defaults WITHOUT triggering events
-            SetUnitSystemAndLanguage("Metric", "en-US")
-            UpdateUIAndSaveSettings()
-        Catch ex As JsonException
-            MessageBox.Show("Error parsing settings file. Using default settings.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            ' Set defaults WITHOUT triggering events
-            SetUnitSystemAndLanguage("Metric", "en-US")
-            UpdateUIAndSaveSettings()
-        Catch ex As Exception
-            MessageBox.Show("An unexpected error occurred while loading settings: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            ' Set defaults WITHOUT triggering events
-            SetUnitSystemAndLanguage("Metric", "en-US")
-            UpdateUIAndSaveSettings()
+            MessageBox.Show("Settings file not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
-    ' Save user settings
-    Private Sub SaveSettings()
-        Try
-            Dim settings As New UserSettings With {
-                .UnitSystem = If(rbMetric.Checked, "Metric", "Imperial"),
-                .Language = Thread.CurrentThread.CurrentUICulture.Name,
-                .UserName = UName
-            }
-            Dim jsonString = JsonSerializer.Serialize(settings)
-            File.WriteAllText(SettingsFile, jsonString)
-        Catch ex As UnauthorizedAccessException
-            MessageBox.Show("Error saving settings: Access to the path is denied.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        Catch ex As IOException
-            MessageBox.Show("Error saving settings: An I/O error occurred.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        Catch ex As Exception
-            MessageBox.Show("An unexpected error occurred while saving settings: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
-    End Sub
 
     ' Load translations from JSON
     Private Sub LoadLanguagesFromJson(filename As String)
@@ -373,38 +284,6 @@ Public Class MainForm
         End Try
     End Sub
 
-    ' Method to set unit system and language without triggering events
-    Private Sub SetUnitSystemAndLanguage(unitSystem As String, languageCode As String)
-        RemoveHandler rbMetric.CheckedChanged, AddressOf rbMetric_CheckedChanged
-        RemoveHandler rbImperial.CheckedChanged, AddressOf rbImperial_CheckedChanged
-
-        rbMetric.Checked = (unitSystem = "Metric")
-        rbImperial.Checked = (unitSystem = "Imperial")
-
-        AddHandler rbMetric.CheckedChanged, AddressOf rbMetric_CheckedChanged
-        AddHandler rbImperial.CheckedChanged, AddressOf rbImperial_CheckedChanged
-
-        Thread.CurrentThread.CurrentUICulture = New CultureInfo(languageCode)
-    End Sub
-
-    ' Test Values
-    Private Sub MetricToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MetricToolStripMenuItem.Click
-        txtWeight.Text = "68"
-        txtHeight.Text = "1.7"
-    End Sub
-
-    Private Sub ImperialToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImperialToolStripMenuItem.Click
-        txtWeight.Text = "149.94"
-        txtHeight.Text = "66.93"
-    End Sub
-
-    Private Sub LaunchBMIResultTestToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LaunchBMIResultTestToolStripMenuItem.Click
-        BMI_Result.ShowDialog()
-    End Sub
-
-    Private Sub LaunchOnboardingToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LaunchOnboardingToolStripMenuItem.Click
-        Onboarding.ShowDialog()
-    End Sub
 
 End Class
 
